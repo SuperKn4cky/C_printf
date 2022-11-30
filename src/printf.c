@@ -2,6 +2,8 @@
 #include <unistd.h>
 #include "stu_printf.h"
 
+#include <stdio.h>
+
 int stu_dprintf(int fd, const char *pattern, ...)
 {
     const char *arg;
@@ -33,7 +35,8 @@ int stu_dprintf(int fd, const char *pattern, ...)
             i += 2;
         } else if (pattern[i] == '%' && pattern[i + 1] == 'p') {
             argp = (unsigned long)va_arg(args, void *);
-            size_write += write(fd, &argp, 4);
+            size_write += write(fd, &argp, sizeof(argp));
+            printf("\nprintf adress: %p\n", (void *)argp);
             i += 2;
         } else {
             size_write += write(fd, &pattern[i], 1);
