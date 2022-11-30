@@ -6,11 +6,14 @@
  * description: printf lib
  */
 
-#include "struct.h"
-
 #ifndef STU_PRINTF_H_
 #define STU_PRINTF_H_
 
-int main(void);
+int stu_dprintf(const char *pattern, ...);
+unsigned int stu_strlen(const char *str);
+int nb_len(int str);
+int stu_puts(const char *str);
+int stu_dputs(int str);
+int stu_pow(int nb, int power);
 
 #endif // STU_PRINTF_H_
