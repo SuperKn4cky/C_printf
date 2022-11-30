@@ -9,11 +9,12 @@
 #ifndef STU_PRINTF_H_
 #define STU_PRINTF_H_
 
-int stu_dprintf(const char *pattern, ...);
+int stu_dprintf(int fd, const char *pattern, ...);
 unsigned int stu_strlen(const char *str);
 int nb_len(int str);
-int stu_puts(const char *str);
-int stu_dputs(int str);
+int stu_puts(int fd, const char *str);
+int stu_dputs(int fd, int str);
 int stu_pow(int nb, int power);
+char *stu_strdup(const char *str);
 
 #endif // STU_PRINTF_H_

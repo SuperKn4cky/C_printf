@@ -12,7 +12,8 @@ SRCS	=	src/main.c			\
 		src/nb_len.c			\
 		src/puts.c			\
 		src/dputs.c			\
-		src/pow.c
+		src/pow.c			\
+		src/strdup.c
 
 OBJS	=	$(SRCS:.c=.o)
 

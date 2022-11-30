@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include "stu_printf.h"
 
-int stu_dputs(int str)
+int stu_dputs(int fd, int str)
 {
     float digit;
     int size_write;
@@ -19,7 +19,7 @@ int stu_dputs(int str)
         digit -= tmp;
         digit = digit * 10;
         tmp = digit + '0';
-        size_write += write(1, &tmp, 1);
+        size_write += write(fd, &tmp, 1);
         size -= 1;
     }
     return (size_write);

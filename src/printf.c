@@ -2,9 +2,11 @@
 #include <unistd.h>
 #include "stu_printf.h"
 
-int stu_dprintf(const char *pattern, ...)
+int stu_dprintf(int fd, const char *pattern, ...)
 {
     const char *arg;
+    char argc;
+    unsigned long argp;
     int argd;
     int size_write;
     int i;
@@ -15,18 +17,26 @@ int stu_dprintf(const char *pattern, ...)
     va_start(args, pattern);
     while (pattern[i] != '\0') {
         if (pattern[i] == '%' && pattern[i + 1] == '%') {
-            size_write = stu_puts("%");
+            size_write = stu_puts(fd, "%");
             i += 2;
         } else if (pattern[i] == '%' && pattern[i + 1] == 's') {
             arg = va_arg(args, const char *);
-            size_write += stu_puts(arg);
+            size_write += stu_puts(fd, arg);
             i += 2;
         } else if (pattern[i] == '%' && pattern[i + 1] == 'd') {
             argd = va_arg(args, int);
-            size_write += stu_dputs(argd);
+            size_write += stu_dputs(fd, argd);
+            i += 2;
+        } else if (pattern[i] == '%' && pattern[i + 1] == 'c') {
+            argc = va_arg(args, int);
+            size_write += write(fd, &argc, 1);
+            i += 2;
+        } else if (pattern[i] == '%' && pattern[i + 1] == 'p') {
+            argp = (unsigned long)va_arg(args, void *);
+            size_write += write(fd, &argp, 4);
             i += 2;
         } else {
-            size_write += write(1, &pattern[i], 1);
+            size_write += write(fd, &pattern[i], 1);
             i += 1;
         }
     }
