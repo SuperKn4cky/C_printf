@@ -58,6 +58,8 @@ int stu_dprintf(int fd, const char *pattern, ...)
             size_write += stu_pputs(fd, argp);//write(fd, &argp, sizeof(argp));
             printf("\nprintf adress: %p\n", (void *)argp);
             i += 2;
+        } else if (pattern[i] == '%') {
+            i += 1;
         } else {
             size_write += write(fd, &pattern[i], 1);
             i += 1;
