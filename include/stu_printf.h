@@ -14,6 +14,7 @@ unsigned int stu_strlen(const char *str);
 int nb_len(int str);
 int stu_puts(int fd, const char *str);
 int stu_dputs(int fd, int str);
+int stu_pputs(int fd, unsigned long nbr);
 int stu_pow(int nb, int power);
 char *stu_strdup(const char *str);
 

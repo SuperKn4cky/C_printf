@@ -4,7 +4,7 @@
 
 int main(void)
 {
-    printf("%+09d\n", 56);
-    return (stu_dprintf(1, "%: %%\nstr: %s\ndigit: %d\nchar: %c\nadress: %p\n",
+    //printf("%+09d\n", 56);
+    return (stu_dprintf(1, "%%: %%\nstr: %s\ndigit: %d\nchar: %c\nadress: %p\n",
                         "monkey", 12345, 'a', stu_strdup("LUIGI")));
 }

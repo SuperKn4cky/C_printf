@@ -2,27 +2,6 @@
 #include <unistd.h>
 #include "stu_printf.h"
 
-#include <stdio.h>
-
-int stu_pputs(int fd, unsigned long nbr)
-{
-    char tmp;
-    int size_write;
-
-    size_write = 0;
-    if (nbr != 0)
-        {
-            stu_pputs(fd, nbr / 16);
-            if (nbr % 16 < 10) {
-                tmp = nbr % 16 + '0';
-            } else {
-                tmp = (nbr % 16) - 10 + 'a';
-            }
-            size_write += write(fd, &tmp, 1);
-        }
-    return (size_write);
-}
-
 int stu_dprintf(int fd, const char *pattern, ...)
 {
     const char *arg;
@@ -54,9 +33,8 @@ int stu_dprintf(int fd, const char *pattern, ...)
             i += 2;
         } else if (pattern[i] == '%' && pattern[i + 1] == 'p') {
             argp = (unsigned long)va_arg(args, void *);
-            size_write += write(fd, "0x", 2);
-            size_write += stu_pputs(fd, argp);//write(fd, &argp, sizeof(argp));
-            printf("\nprintf adress: %p\n", (void *)argp);
+            size_write += stu_puts(fd, "0x");
+            size_write += stu_pputs(fd, argp);
             i += 2;
         } else if (pattern[i] == '%') {
             i += 1;
