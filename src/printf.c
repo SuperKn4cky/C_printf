@@ -33,7 +33,6 @@ int stu_dprintf(int fd, const char *pattern, ...)
             i += 2;
         } else if (pattern[i] == '%' && pattern[i + 1] == 'p') {
             argp = (unsigned long)va_arg(args, void *);
-            size_write += stu_puts(fd, "0x");
             size_write += stu_pputs(fd, argp);
             i += 2;
         } else if (pattern[i] == '%') {

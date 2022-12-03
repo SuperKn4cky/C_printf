@@ -4,7 +4,13 @@
 
 int main(void)
 {
+    char *str = NULL;
+
     //printf("%+09d\n", 56);
-    return (stu_dprintf(1, "%%: %%\nstr: %s\ndigit: %d\nchar: %c\nadress: %p\n",
-                        "monkey", 12345, 'a', stu_strdup("LUIGI")));
+    dprintf(1, "dprintf :\n%%      :  %%\nchar * :  %s\nint    :  %d\nchar   :  %c\nadress :| %p\n        | %p\n\n",
+                        "monkey", 12345, 'a', stu_strdup("Monkey"), str);
+
+    stu_dprintf(1, "stu_dprintf :\n%%      :  %%\nchar * :  %s\nint    :  %d\nchar   :  %c\nadress :| %p\n        | %p\n",
+                        "monkey", 12345, 'a', stu_strdup("Monkey"), str);
+    return 0;
 }
