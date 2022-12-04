@@ -7,7 +7,7 @@ int stu_dprintf(int fd, const char *pattern, ...)
     const char *arg;
     char argc;
     unsigned long argp;
-    int argd;
+    long int argd;
     int size_write;
     int i;
     va_list args;
@@ -24,8 +24,10 @@ int stu_dprintf(int fd, const char *pattern, ...)
             size_write += stu_puts(fd, arg);
             i += 2;
         } else if (pattern[i] == '%' && pattern[i + 1] == 'd') {
-            argd = va_arg(args, int);
-            size_write += stu_dputs(fd, argd);
+            argd = va_arg(args, long int);
+            if (argd <= 2147483647) {
+                size_write += stu_dputs(fd, argd);          
+            }
             i += 2;
         } else if (pattern[i] == '%' && pattern[i + 1] == 'c') {
             argc = va_arg(args, int);

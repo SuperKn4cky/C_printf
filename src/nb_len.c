@@ -1,4 +1,4 @@
-int nb_len(int str)
+int nb_len(long int str)
 {
     int size;
 
