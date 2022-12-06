@@ -1,3 +1,11 @@
+/*
+ * E89 Pedagogical & Technical Lab
+ * project:     stu_dprintf
+ * created on:  2022-12-06 - 10:14 +0100
+ * 1st author:  quentin.gimenez - quentin.gimenez
+ * description: count size of number
+ */
+
 int nb_len(int str)
 {
     int size;
