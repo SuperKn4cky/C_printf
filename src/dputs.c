@@ -8,17 +8,16 @@
 
 #include <unistd.h>
 #include "stu_printf.h"
+#include "struct.h"
 
-int stu_dputs(int fd, int str)
+int stu_dputs(int str, struct stu_dprintf *opt)
 {
-    int size_write;
     int size;
     int digit;
 
-    size_write = 0;
     if (str < 0) {
         str = str * -1;
-        size_write += write(fd, "-", 1);
+        opt->size_write += write(opt->fd, "-", 1);
     }
     size = nb_len(str);
     while (size > 0) {
@@ -26,8 +25,8 @@ int stu_dputs(int fd, int str)
         digit -= str % stu_pow(10, size - 1);
         digit /= stu_pow(10, nb_len(digit) - 1);
         digit += '0';
-        size_write += write(fd, &digit, 1);
+        opt->size_write += write(opt->fd, &digit, 1);
         size -= 1;
     }
-    return (size_write);
+    return (0);
 }

@@ -6,16 +6,18 @@
  * description: printf lib
  */
 
+#include "struct.h"
+
 #ifndef STU_PRINTF_H_
 #define STU_PRINTF_H_
 
 int stu_dprintf(int fd, const char *pattern, ...);
 unsigned int stu_strlen(const char *str);
 int nb_len(int str);
-int stu_puts(int fd, const char *str);
-int stu_cputs(int fd, char lettre);
-int stu_dputs(int fd, int str);
-int stu_pputs(int fd, unsigned long nbr);
+int stu_puts(const char *str, struct stu_dprintf *opt);
+int stu_cputs(char lettre, struct stu_dprintf *opt);
+int stu_dputs(int str, struct stu_dprintf *opt);
+int stu_pputs(unsigned long nbr, struct stu_dprintf *opt);
 int stu_pow(int nb, int power);
 char *stu_strdup(const char *str);
 int get_digit(int nb, int index);

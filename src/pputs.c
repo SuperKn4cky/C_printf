@@ -9,28 +9,27 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "stu_printf.h"
+#include "struct.h"
 
-int stu_pputs(int fd, unsigned long nbr)
+int stu_pputs(unsigned long nbr, struct stu_dprintf *opt)
 {
     char *str;
     char *base16;
-    int size_write;
     int i;
 
     i = 5;
     str = malloc(sizeof(char) * 6);
     base16 = "0123456789abcdef";
-    size_write = 0;
     while (nbr != 0) {
         str[i] = base16[nbr % 16];
         nbr /= 16;
         i -= 1;
-        }
+    }
     if (stu_strlen(str) == 0) {
-        write(fd, "(null)", 6);
+        write(opt->fd, "(null)", 6);
         return 0;
     }
-    size_write += stu_puts(fd, "0x");
-    size_write += write(fd, str, 6);
-    return (size_write);
+    opt->size_write += stu_puts("0x", opt);
+    opt->size_write += write(opt->fd, str, 6);
+    return (0);
 }

@@ -10,7 +10,9 @@
 #define STRUCT_H_
 
 struct stu_dprintf {
+    const char *pattern;
     int size_write;
+    int fd;
     int i;
 };
 

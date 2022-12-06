@@ -7,8 +7,9 @@
  */
 
 #include <unistd.h>
+#include "struct.h"
 
-int stu_cputs(int fd, char lettre)
+int stu_cputs(char lettre, struct stu_dprintf *opt)
 {
-    return (write(fd, &lettre, 1));
+    return (write(opt->fd, &lettre, 1));
 }

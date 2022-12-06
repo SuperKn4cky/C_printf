@@ -11,20 +11,20 @@
 #include "stu_printf.h"
 #include "struct.h"
 
-static int pourcentage(int fd, const char *pattern, struct stu_dprintf *opt)
+static int pourcentage(struct stu_dprintf *opt, const char *pattern)
 {
     if (pattern[opt->i] == '%' && pattern[opt->i + 1] == '%') {
-        opt->size_write += stu_puts(fd, "%");
+        opt->size_write += stu_puts("%", opt);
     }
     return (0);
 }
 
-static int no_opt(int fd, const char *pattern, struct stu_dprintf *opt)
+static int no_opt(struct stu_dprintf *opt, const char *pattern)
 {
     if (pattern[opt->i] == '%') {
         opt->i += 2;
     }
-    opt->size_write += write(fd, &pattern[opt->i], 1);
+    opt->size_write += write(opt->fd, &pattern[opt->i], 1);
     opt->i -= 1;
     return (0);
 }
@@ -34,21 +34,22 @@ int stu_dprintf(int fd, const char *pattern, ...)
     struct stu_dprintf opt;
     va_list args;
 
+    opt.fd = fd;
     opt.i = 0;
     opt.size_write = 0;
     va_start(args, pattern);
     while (pattern[opt.i] != '\0') {
-        pourcentage(fd, pattern, &opt);
+        pourcentage(&opt, pattern);
         if (pattern[opt.i] == '%' && pattern[opt.i + 1] == 's') {
-            opt.size_write += stu_puts(fd, va_arg(args, const char *));
+            stu_puts(va_arg(args, const char *), &opt);
         } else if (pattern[opt.i] == '%' && pattern[opt.i + 1] == 'd') {
-            opt.size_write += stu_dputs(fd, va_arg(args, int));
+            stu_dputs(va_arg(args, int), &opt);
         } else if (pattern[opt.i] == '%' && pattern[opt.i + 1] == 'c') {
-            opt.size_write += stu_cputs(fd, va_arg(args, int));
+            stu_cputs(va_arg(args, int), &opt);
         } else if (pattern[opt.i] == '%' && pattern[opt.i + 1] == 'p') {
-            opt.size_write += stu_pputs(fd, (unsigned long)va_arg(args, void *));
+            stu_pputs((unsigned long)va_arg(args, void *), &opt);
         }
-        no_opt(fd, pattern, &opt);
+        no_opt(&opt, pattern);
         opt.i += 2;
     }
     va_end(args);
