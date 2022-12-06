@@ -9,8 +9,8 @@ int stu_pputs(int fd, unsigned long nbr)
     int size_write;
     int i;
 
-    i = 11;
-    str = malloc(sizeof(char) * 12);
+    i = 5;
+    str = malloc(sizeof(char) * 6);
     base16 = "0123456789abcdef";
     size_write = 0;
     while (nbr != 0) {
@@ -18,11 +18,11 @@ int stu_pputs(int fd, unsigned long nbr)
         nbr /= 16;
         i -= 1;
         }
-    if (str[0] == '\0') {
+    if (stu_strlen(str) == 0) {
         write(fd, "(null)", 6);
         return 0;
     }
     size_write += stu_puts(fd, "0x");
-    size_write += write(fd, str, 12);
+    size_write += write(fd, str, 6);
     return (size_write);
 }

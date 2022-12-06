@@ -1,22 +1,32 @@
+/*
+ * E89 Pedagogical & Technical Lab
+ * project:     stu_dprintf
+ * created on:  2022-12-05 - 11:44 +0100
+ * 1st author:  quentin.gimenez - quentin.gimenez
+ * description: print decimal
+ */
+
 #include <unistd.h>
 #include "stu_printf.h"
 
-#include <stdio.h>
-
-int stu_dputs(int fd, long int str)
+int stu_dputs(int fd, int str)
 {
     int size_write;
     int size;
-    int tmp;
+    int digit;
 
     size_write = 0;
+    if (str < 0) {
+        str = str * -1;
+        size_write += write(fd, "-", 1);
+    }
     size = nb_len(str);
     while (size > 0) {
-        tmp = str % stu_pow(10, size);
-        tmp -= str % stu_pow(10, size - 1);
-        tmp /= stu_pow(10, nb_len(tmp) - 1);
-        printf("\ntmp : %d | len : %d", tmp, nb_len(tmp));
-        size_write += write(fd, &tmp, 1);
+        digit = str % stu_pow(10, size);
+        digit -= str % stu_pow(10, size - 1);
+        digit /= stu_pow(10, nb_len(digit) - 1);
+        digit += '0';
+        size_write += write(fd, &digit, 1);
         size -= 1;
     }
     return (size_write);
