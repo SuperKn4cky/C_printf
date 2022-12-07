@@ -40,7 +40,6 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	ar rc $(NAME) $(OBJS)
-	$(AR)
 
 test:
 	$(CC) $(CFLAGS) src/main.c printf.a -o printf
