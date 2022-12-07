@@ -4,10 +4,9 @@
 # 1st author:  quentin.gimenez - quentin.gimenez
 # description: Makefile
 
-NAME	=	printf
+NAME	=	printf.a
 
-SRCS	=	src/main.c			\
-		src/printf.c			\
+SRCS	=	src/printf.c			\
 		src/strlen.c			\
 		src/nb_len.c			\
 		src/puts.c			\
@@ -15,7 +14,7 @@ SRCS	=	src/main.c			\
 		src/pputs.c 			\
 		src/pow.c			\
 		src/strdup.c			\
-		src/cputs.c
+		src/cputs.c			\
 
 OBJS	=	$(SRCS:.c=.o)
 
@@ -26,6 +25,8 @@ LDFLAGS	+=
 RM	=	rm -vf
 
 CC	:=	gcc
+
+AR	:= 	make test
 
 ifdef RELEASE
 CFLAGS += -O2
@@ -38,18 +39,17 @@ endif
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(OBJS) $(LDFLAGS) -o $(NAME)
+	ar rc $(NAME) $(OBJS)
+	$(AR)
+
+test:
+	$(CC) $(CFLAGS) src/main.c printf.a -o printf
 
 save:
 	git status
 	git add src/*.c include/*.h Makefile
 	git commit -m "$(NAME) save"
 	git push
-
-exe:
-	make re
-	./$(NAME)
-	make fclean
 
 clean:
 	@$(RM) $(OBJS)
