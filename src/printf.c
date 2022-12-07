@@ -11,22 +11,20 @@
 #include "stu_printf.h"
 #include "struct.h"
 
-static int pourcentage(struct stu_dprintf *opt, const char *pattern)
+static void pourcentage(struct stu_dprintf *opt, const char *pattern)
 {
     if (pattern[opt->i] == '%' && pattern[opt->i + 1] == '%') {
-        opt->size_write += stu_puts("%", opt);
+        stu_cputs('%', opt);
     }
-    return (0);
 }
 
-static int no_opt(struct stu_dprintf *opt, const char *pattern)
+static void no_opt(struct stu_dprintf *opt, const char *pattern)
 {
     if (pattern[opt->i] == '%') {
         opt->i += 2;
     }
     opt->size_write += write(opt->fd, &pattern[opt->i], 1);
     opt->i -= 1;
-    return (0);
 }
 
 int stu_dprintf(int fd, const char *pattern, ...)

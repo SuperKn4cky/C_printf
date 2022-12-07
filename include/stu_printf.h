@@ -14,9 +14,9 @@
 int stu_dprintf(int fd, const char *pattern, ...);
 unsigned int stu_strlen(const char *str);
 int nb_len(int str);
-int stu_puts(const char *str, struct stu_dprintf *opt);
-int stu_cputs(char lettre, struct stu_dprintf *opt);
-int stu_dputs(int str, struct stu_dprintf *opt);
+void stu_puts(const char *str, struct stu_dprintf *opt);
+void stu_cputs(char lettre, struct stu_dprintf *opt);
+void stu_dputs(int str, struct stu_dprintf *opt);
 int stu_pputs(unsigned long nbr, struct stu_dprintf *opt);
 int stu_pow(int nb, int power);
 char *stu_strdup(const char *str);

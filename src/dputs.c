@@ -10,7 +10,7 @@
 #include "stu_printf.h"
 #include "struct.h"
 
-int stu_dputs(int str, struct stu_dprintf *opt)
+void stu_dputs(int str, struct stu_dprintf *opt)
 {
     int size;
     int digit;
@@ -28,5 +28,4 @@ int stu_dputs(int str, struct stu_dprintf *opt)
         opt->size_write += write(opt->fd, &digit, 1);
         size -= 1;
     }
-    return (0);
 }

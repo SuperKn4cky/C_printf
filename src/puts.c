@@ -10,19 +10,7 @@
 #include "stu_printf.h"
 #include "struct.h"
 
-int stu_putchar (int fd, const char *c, int i)
+void stu_puts(const char *str, struct stu_dprintf *opt)
 {
-    return (write(fd, & *c, i));
-}
-
-int stu_puts(const char *str, struct stu_dprintf *opt)
-{
-    int i;
-
-    i = stu_strlen(str);
-    if (stu_putchar(opt->fd, str, i) == -1)
-        {
-            return (-1);
-        }
-    return (i);
+    opt->size_write += write(opt->fd, str, stu_strlen(str));
 }

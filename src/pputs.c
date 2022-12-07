@@ -28,10 +28,10 @@ int stu_pputs(unsigned long nbr, struct stu_dprintf *opt)
         nbr /= 16;
         i += 1;
     }
-    opt->size_write += stu_puts("0x", opt);
+    opt->size_write += write(opt->fd, "0x", 2);
     while (i > 0) {
         i -= 1;
         opt->size_write += write(opt->fd, &str[i], 1);
     }
-    return (0);
+    return 0;
 }

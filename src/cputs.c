@@ -9,7 +9,7 @@
 #include <unistd.h>
 #include "struct.h"
 
-int stu_cputs(char lettre, struct stu_dprintf *opt)
+void stu_cputs(char lettre, struct stu_dprintf *opt)
 {
-    return (write(opt->fd, &lettre, 1));
+    opt->size_write += write(opt->fd, &lettre, 1);
 }
