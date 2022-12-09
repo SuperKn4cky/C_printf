@@ -27,6 +27,17 @@ static void no_opt(struct stu_dprintf *opt, const char *pattern)
     opt->i -= 1;
 }
 
+static void skip_bourrage(struct stu_dprintf *opt, const char *pattern)
+{
+    if (pattern[opt->i] == '%') {
+        if (pattern[opt->i + 1] == '+' || pattern[opt->i + 1] == '-') {
+            while (pattern[opt->i - 1] != 'd') {
+            opt->i += 1;
+            }
+        }
+    }
+}
+
 int stu_dprintf(int fd, const char *pattern, ...)
 {
     struct stu_dprintf opt;
@@ -47,6 +58,7 @@ int stu_dprintf(int fd, const char *pattern, ...)
         } else if (pattern[opt.i] == '%' && pattern[opt.i + 1] == 'p') {
             stu_pputs((unsigned long)va_arg(args, void *), &opt);
         }
+        skip_bourrage(&opt, pattern);
         no_opt(&opt, pattern);
         opt.i += 2;
     }
