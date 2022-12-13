@@ -53,14 +53,14 @@ static void bourrage(struct stu_dprintf *opt, const char *pattern, va_list args)
     nb = va_arg(args, int);
     if (pattern[opt->i] == '%' && pattern[opt->i + 1] == '+') {
         if (pattern[opt->i + 2] == '0') {
-            size = pattern[opt->i + 3] - 48 - nb_len(nb);
+            size = (pattern[opt->i + 3] - 48) - nb_len(nb);
             opt->size_write = write(opt->fd, "+", 1);
             while (size > 0) {
                 opt->size_write = write(opt->fd, "0", 1);
                 size -= 1;
             }
         } else {
-            size = pattern[opt->i + 2] - 48 - nb_len(nb);
+            size = (pattern[opt->i + 2] - 48) - nb_len(nb);
             while (size > 0) {
                 opt->size_write = write(opt->fd, " ", 1);
                 size -= 1;
@@ -70,7 +70,7 @@ static void bourrage(struct stu_dprintf *opt, const char *pattern, va_list args)
         stu_dputs(nb, opt);
     } else if (pattern[opt->i] == '%' && pattern[opt->i + 1] == '-') {
         stu_dputs(nb, opt);
-        size = pattern[opt->i + 2] - 48 - nb_len(nb);
+        size = (pattern[opt->i + 2] - 48) - nb_len(nb);
         while (size > 0) {
             opt->size_write = write(opt->fd, " ", 1);
             size -= 1;
