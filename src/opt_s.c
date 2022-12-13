@@ -12,14 +12,14 @@
 
 void opt_s(struct stu_dprintf *opt, const char *pattern, va_list args)
 {
-    opt->tmp = opt->s;
+    opt->tmp = opt->count;
     while (opt->tmp > 0) {
         va_arg(args, const char *);
         opt->tmp -= 1;
     }
     if (pattern[opt->i] == '%' && pattern[opt->i + 1] == 's') {
         stu_puts(va_arg(args, const char *), opt);
-        opt->s += 1;
+        opt->count += 1;
         opt->i += 2;
     }
 }

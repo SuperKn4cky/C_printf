@@ -20,8 +20,8 @@ int stu_pputs(unsigned long nbr, struct stu_dprintf *opt)
     i = 0;
     base16 = "0123456789abcdef";
     if (nbr == 0) {
-        write(opt->fd, "(null)", 6);
-        return 0;
+        opt->size_write += write(opt->fd, "(null)", 6);
+        return 1;
     }
     while (nbr != 0) {
         str[i] = base16[nbr % 16];

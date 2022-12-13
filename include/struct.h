@@ -15,10 +15,7 @@ struct stu_dprintf {
     int fd;
     int i;
     int tmp;
-    int s;
-    int d;
-    int c;
-    int p;
+    int count;
 };
 
 #endif // STRUCT_H_

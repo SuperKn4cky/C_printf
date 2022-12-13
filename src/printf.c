@@ -46,10 +46,7 @@ int stu_dprintf(int fd, const char *pattern, ...)
 
     opt.fd = fd;
     opt.i = 0;
-    opt.s = 0;
-    opt.d = 0;
-    opt.c = 0;
-    opt.p = 0;
+    opt.count = 0;
     opt.size_write = 0;
     va_start(args, pattern);
     while (pattern[opt.i] != '\0') {
