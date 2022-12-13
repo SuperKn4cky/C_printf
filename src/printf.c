@@ -15,16 +15,8 @@ static void pourcentage(struct stu_dprintf *opt, const char *pattern)
 {
     if (pattern[opt->i] == '%' && pattern[opt->i + 1] == '%') {
         stu_cputs('%', opt);
-    }
-}
-
-static void no_opt(struct stu_dprintf *opt, const char *pattern)
-{
-    if (pattern[opt->i] == '%') {
         opt->i += 2;
     }
-    opt->size_write += write(opt->fd, &pattern[opt->i], 1);
-    opt->i -= 1;
 }
 
 static void skip_bourrage(struct stu_dprintf *opt, const char *pattern)
@@ -32,10 +24,19 @@ static void skip_bourrage(struct stu_dprintf *opt, const char *pattern)
     if (pattern[opt->i] == '%') {
         if (pattern[opt->i + 1] == '+' || pattern[opt->i + 1] == '-') {
             while (pattern[opt->i - 1] != 'd') {
-            opt->i += 1;
+                opt->i += 1;
             }
         }
     }
+}
+
+static void no_opt(struct stu_dprintf *opt, const char *pattern)
+{
+    if (pattern[opt->i] == '%') {
+        opt->i += 1;
+    }
+    opt->size_write += write(opt->fd, &pattern[opt->i], 1);
+    opt->i += 1;
 }
 
 int stu_dprintf(int fd, const char *pattern, ...)
@@ -45,22 +46,20 @@ int stu_dprintf(int fd, const char *pattern, ...)
 
     opt.fd = fd;
     opt.i = 0;
+    opt.s = 0;
+    opt.d = 0;
+    opt.c = 0;
+    opt.p = 0;
     opt.size_write = 0;
     va_start(args, pattern);
     while (pattern[opt.i] != '\0') {
         pourcentage(&opt, pattern);
-        if (pattern[opt.i] == '%' && pattern[opt.i + 1] == 's') {
-            stu_puts(va_arg(args, const char *), &opt);
-        } else if (pattern[opt.i] == '%' && pattern[opt.i + 1] == 'd') {
-            stu_dputs(va_arg(args, int), &opt);
-        } else if (pattern[opt.i] == '%' && pattern[opt.i + 1] == 'c') {
-            stu_cputs(va_arg(args, int), &opt);
-        } else if (pattern[opt.i] == '%' && pattern[opt.i + 1] == 'p') {
-            stu_pputs((unsigned long)va_arg(args, void *), &opt);
-        }
+        opt_s(&opt, pattern, args);
+        opt_d(&opt, pattern, args);
+        opt_c(&opt, pattern, args);
+        opt_p(&opt, pattern, args);
         skip_bourrage(&opt, pattern);
         no_opt(&opt, pattern);
-        opt.i += 2;
     }
     va_end(args);
     return (opt.size_write);

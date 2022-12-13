@@ -17,7 +17,7 @@ int stu_pputs(unsigned long nbr, struct stu_dprintf *opt)
     char *base16;
     int i;
 
-    i = 1;
+    i = 0;
     base16 = "0123456789abcdef";
     if (nbr == 0) {
         write(opt->fd, "(null)", 6);

@@ -15,6 +15,10 @@ SRCS	=	src/printf.c			\
 		src/pow.c			\
 		src/strdup.c			\
 		src/cputs.c			\
+		src/opt_s.c			\
+		src/opt_d.c			\
+		src/opt_c.c			\
+		src/opt_p.c			\
 
 OBJS	=	$(SRCS:.c=.o)
 
