@@ -39,6 +39,11 @@ static void no_opt(struct stu_dprintf *opt, const char *pattern)
     opt->i += 1;
 }
 
+static void bourrage(struct stu_dprintf *opt, const char *pattern, va_list args)
+{
+    
+}
+
 int stu_dprintf(int fd, const char *pattern, ...)
 {
     struct stu_dprintf opt;
@@ -55,7 +60,7 @@ int stu_dprintf(int fd, const char *pattern, ...)
         opt_d(&opt, pattern, args);
         opt_c(&opt, pattern, args);
         opt_p(&opt, pattern, args);
-        skip_bourrage(&opt, pattern);
+        //skip_bourrage(&opt, pattern);
         no_opt(&opt, pattern);
     }
     va_end(args);
