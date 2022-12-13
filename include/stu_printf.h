@@ -26,5 +26,7 @@ void opt_s(struct stu_dprintf *opt, const char *pattern, va_list args);
 void opt_d(struct stu_dprintf *opt, const char *pattern, va_list args);
 void opt_c(struct stu_dprintf *opt, const char *pattern, va_list args);
 void opt_p(struct stu_dprintf *opt, const char *pattern, va_list args);
+void d_bourrage(struct stu_dprintf *opt, const char *pattern, va_list args);
+void skip_bourrage(struct stu_dprintf *opt, const char *pattern);
 
 #endif // STU_PRINTF_H_

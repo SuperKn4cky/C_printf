@@ -19,17 +19,6 @@ static void pourcentage(struct stu_dprintf *opt, const char *pattern)
     }
 }
 
-static void skip_bourrage(struct stu_dprintf *opt, const char *pattern)
-{
-    if (pattern[opt->i] == '%') {
-        if (pattern[opt->i + 1] == '+' || pattern[opt->i + 1] == '-') {
-            while (pattern[opt->i - 1] != 'd') {
-                opt->i += 1;
-            }
-        }
-    }
-}
-
 static void no_opt(struct stu_dprintf *opt, const char *pattern)
 {
     if (pattern[opt->i] == '%') {
@@ -41,42 +30,16 @@ static void no_opt(struct stu_dprintf *opt, const char *pattern)
 
 static void bourrage(struct stu_dprintf *opt, const char *pattern, va_list args)
 {
-    int nb;
-    int size;
+    int option;
 
-    size = 0;
-    opt->tmp = opt->count;
-    while (opt->tmp > 0) {
-        va_arg(args, int);
-        opt->tmp -= 1;
-    }
-    nb = va_arg(args, int);
-    if (pattern[opt->i] == '%' && pattern[opt->i + 1] == '+') {
-        if (pattern[opt->i + 2] == '0') {
-            size = (pattern[opt->i + 3] - 48) - nb_len(nb);
-            opt->size_write = write(opt->fd, "+", 1);
-            while (size > 0) {
-                opt->size_write = write(opt->fd, "0", 1);
-                size -= 1;
-            }
-        } else {
-            size = (pattern[opt->i + 2] - 48) - nb_len(nb);
-            while (size > 0) {
-                opt->size_write = write(opt->fd, " ", 1);
-                size -= 1;
-            }
-            opt->size_write = write(opt->fd, "+", 1);
+    option = 0;
+    while (pattern[opt->i + option - 1] != 'd' && pattern[opt->i + option - 1] != 's'
+           && pattern[opt->i + option - 1] != 'c' && pattern[opt->i + option - 1] != 'p') {
+        if (pattern[opt-> i +option] == 'd') {
+            d_bourrage(opt, pattern, args);
         }
-        stu_dputs(nb, opt);
-    } else if (pattern[opt->i] == '%' && pattern[opt->i + 1] == '-') {
-        stu_dputs(nb, opt);
-        size = (pattern[opt->i + 2] - 48) - nb_len(nb);
-        while (size > 0) {
-            opt->size_write = write(opt->fd, " ", 1);
-            size -= 1;
-        }
+        option += 1;
     }
-    skip_bourrage(opt, pattern);
 }
 
 int stu_dprintf(int fd, const char *pattern, ...)
@@ -95,7 +58,6 @@ int stu_dprintf(int fd, const char *pattern, ...)
         opt_d(&opt, pattern, args);
         opt_c(&opt, pattern, args);
         opt_p(&opt, pattern, args);
-        //skip_bourrage(&opt, pattern);
         bourrage(&opt, pattern, args);
         no_opt(&opt, pattern);
     }

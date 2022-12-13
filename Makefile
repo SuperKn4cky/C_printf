@@ -19,6 +19,8 @@ SRCS	=	src/printf.c			\
 		src/opt_d.c			\
 		src/opt_c.c			\
 		src/opt_p.c			\
+		src/d_bourrage.c		\
+		src/skip_bourrage.c		\
 
 OBJS	=	$(SRCS:.c=.o)
 
