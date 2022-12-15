@@ -48,7 +48,7 @@ $(NAME): $(OBJS)
 	ar rc $(NAME) $(OBJS)
 
 test:
-	$(CC) $(CFLAGS) src/main.c printf.a -o printf
+	$(CC) $(CFLAGS) src/test_main.c printf.a -o printf
 
 save:
 	git status

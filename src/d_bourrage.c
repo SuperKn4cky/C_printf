@@ -11,36 +11,39 @@
 #include "stu_printf.h"
 #include "struct.h"
 
-void d_bourrage(struct stu_dprintf *opt, const char *pattern, va_list args)
+static void plus(struct stu_dprintf *opt, const char *pattern, int nb)
 {
-    int nb;
     int size;
 
     size = 0;
-    opt->tmp = opt->count;
-    while (opt->tmp > 0) {
-        va_arg(args, int);
-        opt->tmp -= 1;
-    }
-    nb = va_arg(args, int);
     if (pattern[opt->i] == '%' && pattern[opt->i + 1] == '+') {
         if (pattern[opt->i + 2] == '0') {
-            size = (pattern[opt->i + 3] - 48) - nb_len(nb);
+            size = (pattern[opt->i + 3] - 48) - nb_len(nb) - 1;
             opt->size_write = write(opt->fd, "+", 1);
             while (size > 0) {
                 opt->size_write = write(opt->fd, "0", 1);
                 size -= 1;
             }
         } else {
-            size = (pattern[opt->i + 2] - 48) - nb_len(nb);
+            size = (pattern[opt->i + 2] - 48) - nb_len(nb) - 1;
             while (size > 0) {
                 opt->size_write = write(opt->fd, " ", 1);
                 size -= 1;
             }
-            opt->size_write = write(opt->fd, "+", 1);
+            if (nb > 0) {
+                opt->size_write = write(opt->fd, "+", 1);
+            }
         }
         stu_dputs(nb, opt);
-    } else if (pattern[opt->i] == '%' && pattern[opt->i + 1] == '-') {
+    }
+}
+
+static void moins(struct stu_dprintf *opt, const char *pattern, int nb)
+{
+    int size;
+
+    size = 0;
+    if (pattern[opt->i] == '%' && pattern[opt->i + 1] == '-') {
         stu_dputs(nb, opt);
         size = (pattern[opt->i + 2] - 48) - nb_len(nb);
         while (size > 0) {
@@ -48,5 +51,19 @@ void d_bourrage(struct stu_dprintf *opt, const char *pattern, va_list args)
             size -= 1;
         }
     }
+}
+
+void d_bourrage(struct stu_dprintf *opt, const char *pattern, va_list args)
+{
+    int nb;
+
+    opt->tmp = opt->count;
+    while (opt->tmp > 0) {
+        va_arg(args, int);
+        opt->tmp -= 1;
+    }
+    nb = va_arg(args, int);
+    plus(opt, pattern, nb);
+    moins(opt, pattern, nb);
     skip_bourrage(opt, pattern);
 }
