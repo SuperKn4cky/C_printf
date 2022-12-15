@@ -14,8 +14,6 @@ struct stu_dprintf {
     int size_write;
     int fd;
     int i;
-    int tmp;
-    int count;
 };
 
 #endif // STRUCT_H_

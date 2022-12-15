@@ -56,16 +56,11 @@ static void moins(struct stu_dprintf *opt, const char *pattern, int nb)
     }
 }
 
-void d_bourrage(struct stu_dprintf *opt, const char *pattern, va_list args)
+void d_bourrage(struct stu_dprintf *opt, const char *pattern, va_list *args)
 {
     int nb;
 
-    opt->tmp = opt->count;
-    while (opt->tmp > 0) {
-        va_arg(args, int);
-        opt->tmp -= 1;
-    }
-    nb = va_arg(args, int);
+    nb = va_arg(*args, int);
     plus(opt, pattern, nb);
     moins(opt, pattern, nb);
     skip_bourrage(opt, pattern);

@@ -28,7 +28,7 @@ static void no_opt(struct stu_dprintf *opt, const char *pattern)
     opt->i += 1;
 }
 
-static void bourrage(struct stu_dprintf *opt, const char *pattern, va_list args)
+static void bourrage(struct stu_dprintf *opt, const char *pattern, va_list *args)
 {
     int option;
 
@@ -49,16 +49,16 @@ int stu_dprintf(int fd, const char *pattern, ...)
 
     opt.fd = fd;
     opt.i = 0;
-    opt.count = 0;
     opt.size_write = 0;
     va_start(args, pattern);
     while (pattern[opt.i] != '\0') {
         pourcentage(&opt, pattern);
-        opt_s(&opt, pattern, args);
-        opt_d(&opt, pattern, args);
-        opt_c(&opt, pattern, args);
-        opt_p(&opt, pattern, args);
-        bourrage(&opt, pattern, args);
+        opt_s(&opt, pattern, &args);
+        opt_d(&opt, pattern, &args);
+        opt_c(&opt, pattern, &args);
+        opt_p(&opt, pattern, &args);
+        bourrage(&opt, pattern, &args);
+        skip_bourrage(&opt, pattern);
         no_opt(&opt, pattern);
     }
     va_end(args);

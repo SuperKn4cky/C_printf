@@ -10,16 +10,10 @@
 #include "stu_printf.h"
 #include "struct.h"
 
-void opt_s(struct stu_dprintf *opt, const char *pattern, va_list args)
+void opt_s(struct stu_dprintf *opt, const char *pattern, va_list *args)
 {
-    opt->tmp = opt->count;
-    while (opt->tmp > 0) {
-        va_arg(args, const char *);
-        opt->tmp -= 1;
-    }
     if (pattern[opt->i] == '%' && pattern[opt->i + 1] == 's') {
-        stu_puts(va_arg(args, const char *), opt);
-        opt->count += 1;
+        stu_puts(va_arg(*args, const char *), opt);
         opt->i += 2;
     }
 }

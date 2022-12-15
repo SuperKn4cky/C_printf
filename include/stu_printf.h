@@ -22,11 +22,11 @@ int stu_pputs(unsigned long nbr, struct stu_dprintf *opt);
 int stu_pow(int nb, int power);
 char *stu_strdup(const char *str);
 int get_digit(int nb, int index);
-void opt_s(struct stu_dprintf *opt, const char *pattern, va_list args);
-void opt_d(struct stu_dprintf *opt, const char *pattern, va_list args);
-void opt_c(struct stu_dprintf *opt, const char *pattern, va_list args);
-void opt_p(struct stu_dprintf *opt, const char *pattern, va_list args);
-void d_bourrage(struct stu_dprintf *opt, const char *pattern, va_list args);
+void opt_s(struct stu_dprintf *opt, const char *pattern, va_list *args);
+void opt_d(struct stu_dprintf *opt, const char *pattern, va_list *args);
+void opt_c(struct stu_dprintf *opt, const char *pattern, va_list *args);
+void opt_p(struct stu_dprintf *opt, const char *pattern, va_list *args);
+void d_bourrage(struct stu_dprintf *opt, const char *pattern, va_list *args);
 void skip_bourrage(struct stu_dprintf *opt, const char *pattern);
 
 #endif // STU_PRINTF_H_
