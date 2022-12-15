@@ -11,10 +11,10 @@ int main(void)
     stu_dprintf(1, "char     :  %c\n", 'a');
     stu_dprintf(1, "int      :| %d\n          | %d\n", 123456789, -123456789);
     stu_dprintf(1, "adress   :| %p\n          | %p\n", str1, str2);
-    stu_dprintf(1, "bourrage :| $%+9d$\n", -569);
+    stu_dprintf(1, "bourrage :| $%9d$\n", -569);
     stu_dprintf(1, "         :| $%-9d$\n", -569);
     stu_dprintf(1, "         :| $%+9d$\n", 569);
     stu_dprintf(1, "         :| $%-9d$\n", 569);
-    stu_dprintf(1, "         :| $%+09d$\n", 569);
+    stu_dprintf(1, "         :| $%09d$\n", 569);
     return 0;
 }
