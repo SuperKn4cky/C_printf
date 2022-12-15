@@ -46,6 +46,9 @@ static void moins(struct stu_dprintf *opt, const char *pattern, int nb)
     if (pattern[opt->i] == '%' && pattern[opt->i + 1] == '-') {
         stu_dputs(nb, opt);
         size = (pattern[opt->i + 2] - 48) - nb_len(nb);
+        if (nb < 0) {
+            size -= 1;
+        }
         while (size > 0) {
             opt->size_write = write(opt->fd, " ", 1);
             size -= 1;

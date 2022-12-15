@@ -32,8 +32,6 @@ RM	=	rm -vf
 
 CC	:=	gcc
 
-AR	:= 	make test
-
 ifdef RELEASE
 CFLAGS += -O2
 endif
