@@ -13,7 +13,6 @@ SRCS	=	src/printf.c			\
 		src/dputs.c			\
 		src/pputs.c 			\
 		src/pow.c			\
-		src/strdup.c			\
 		src/cputs.c			\
 		src/opt_s.c			\
 		src/opt_d.c			\
