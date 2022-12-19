@@ -11,6 +11,7 @@
 #include "stu_printf.h"
 #include "struct.h"
 
+
 static void plus(struct stu_dprintf *opt, const char *pattern, int nb)
 {
     int size;
@@ -56,6 +57,21 @@ static void moins(struct stu_dprintf *opt, const char *pattern, int nb)
     }
 }
 
+static void zero(struct stu_dprintf *opt, const char *pattern, int nb)
+{
+    int size;
+
+    size = 0;
+    if (pattern[opt->i + 1] == '0') {
+        size = (pattern[opt->i + 2] - 48) - nb_len(nb);
+        while (size > 0) {
+            opt->size_write = write(opt->fd, "0", 1);
+            size -= 1;
+        }
+        stu_dputs(nb, opt);
+    }
+}
+
 void d_bourrage(struct stu_dprintf *opt, const char *pattern, va_list *args)
 {
     int nb;
@@ -63,5 +79,7 @@ void d_bourrage(struct stu_dprintf *opt, const char *pattern, va_list *args)
     nb = va_arg(*args, int);
     plus(opt, pattern, nb);
     moins(opt, pattern, nb);
+    zero(opt, pattern, nb);
     skip_bourrage(opt, pattern);
 }
+

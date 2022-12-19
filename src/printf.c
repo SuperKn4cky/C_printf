@@ -28,23 +28,23 @@ static void no_opt(struct stu_dprintf *opt, const char *pattern)
     opt->i += 1;
 }
 
-/*
- * static void bourrage(struct stu_dprintf *opt, const char *pattern, va_list *args)
- * {
- *     int option;
- * 
- *     option = 0;
- *     while (pattern[opt->i + option - 1] != 'd'
- *            && pattern[opt->i + option - 1] != 's'
- *            && pattern[opt->i + option - 1] != 'c'
- *            && pattern[opt->i + option - 1] != 'p') {
- *         if (pattern[opt-> i +option] == 'd') {
- *             d_bourrage(opt, pattern, args);
- *         }
- *         option += 1;
- *     }
- * }
- */
+static void bourrage(struct stu_dprintf *opt, const char *pattern, va_list *args)
+{
+    int option;
+
+    option = 0;
+    if (pattern[opt-> i] == '%') {
+        while (pattern[opt->i + option - 1] != 'd'
+               && pattern[opt->i + option - 1] != 's'
+               && pattern[opt->i + option - 1] != 'c'
+               && pattern[opt->i + option - 1] != 'p') {
+            if (pattern[opt-> i + option] == 'd') {
+                d_bourrage(opt, pattern, args);
+            }
+            option += 1;
+        }
+    }
+}
 
 int stu_dprintf(int fd, const char *pattern, ...)
 {
@@ -61,7 +61,7 @@ int stu_dprintf(int fd, const char *pattern, ...)
         opt_d(&opt, pattern, &args);
         opt_c(&opt, pattern, &args);
         opt_p(&opt, pattern, &args);
-        //bourrage(&opt, pattern, &args);
+        bourrage(&opt, pattern, &args);
         skip_bourrage(&opt, pattern);
         no_opt(&opt, pattern);
     }
