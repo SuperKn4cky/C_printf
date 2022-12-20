@@ -14,7 +14,9 @@
 void skip_bourrage(struct stu_dprintf *opt, const char *pattern)
 {
     if (pattern[opt->i] == '%') {
-        if (pattern[opt->i + 1] == '+' || pattern[opt->i + 1] == '-' || pattern[opt->i + 1] == '0') {
+        if (pattern[opt->i + 1] == '+' 
+        || pattern[opt->i + 1] == '-' 
+        || pattern[opt->i + 1] == '0') {
             while (pattern[opt->i - 1] != 'd' && pattern[opt->i - 1] != 's'
                    && pattern[opt->i - 1] != 'c' && pattern[opt->i - 1] != 'p') {
                 opt->i += 1;
